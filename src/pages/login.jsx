@@ -8,7 +8,8 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | Minimal UI </title>
+        {/* <title> Login | Minimal UI </title> */}
+        <title> Đăng nhập | Thiếu nhi Thánh Thể Việt Nam</title>
       </Helmet>
 
       <LoginView />
