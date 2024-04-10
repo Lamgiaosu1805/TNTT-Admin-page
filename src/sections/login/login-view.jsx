@@ -19,6 +19,8 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import axios from 'axios';
+import { Utils } from 'src/utils/utils';
 
 // ----------------------------------------------------------------------
 
@@ -31,10 +33,20 @@ export default function LoginView() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClick = async (inputMail, inputPassword) => {
-    console.log(inputMail)
-    console.log(inputPassword)
-    router.replace('/')
+  const handleClick = async () => {
+    try {
+      const resData = await axios.post(`${Utils.api_url_local}/auth/signIn`, {
+        mail: email,
+        password: password
+      });
+      const data = resData.data;
+      if(data.status == true) {
+        localStorage.setItem("accessToken", data.data.accessToken)
+        router.replace('/')
+      }
+    } catch (error) {
+      console.log("Có lỗi trong quá trình đăng nhập ", error)
+    }
   };
 
   const renderForm = (
@@ -71,7 +83,7 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={() => {handleClick(email, password)}}
+        onClick={() => handleClick()}
       >
         Đăng nhập
       </LoadingButton>

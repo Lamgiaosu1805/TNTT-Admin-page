@@ -13,9 +13,10 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const token = localStorage.getItem('accessToken');
   const routes = useRoutes([
     {
-      element: (
+      element: !token ? <LoginPage /> : (
         <DashboardLayout>
           <Suspense>
             <Outlet />
